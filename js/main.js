@@ -1,104 +1,50 @@
-(function ($) {
-    "use strict";
-    
-    // Dropdown on mouse hover
-    $(document).ready(function () {
-        function toggleNavbarMethod() {
-            if ($(window).width() > 992) {
-                $('.navbar .dropdown').on('mouseover', function () {
-                    $('.dropdown-toggle', this).trigger('click');
-                }).on('mouseout', function () {
-                    $('.dropdown-toggle', this).trigger('click').blur();
-                });
-            } else {
-                $('.navbar .dropdown').off('mouseover').off('mouseout');
-            }
+
+
+const perfumes = [
+    {marca: "Cristian Dior"},
+    {marca: "BVLGARI"},
+    {marca: "BURBERRY"},
+    {marca: "Todos"}
+]
+
+const navbarItems = [
+    {item: "Perfumes", subNavbar: perfumes},
+    {item: "Collares" },
+    {item: "Anillos" },
+    {item: "Aretes" },
+]
+
+const navbar = () => {
+    const navbar=document.getElementById('navbar-tienda-div');
+    navbarItems.forEach(item => {
+        
+        if(item.subNavbar){
+            const subNavbarDiv = document.createElement('div'); 
+            subNavbarDiv.setAttribute('class',"nav-item dropdown");
+            subNavbarDiv.innerHTML = `<a href="#" class="nav-link" data-toggle="dropdown">
+                                            ${item.item} <i class="fa fa-angle-down float-right mt-1"></i>
+                                      </a>`
+
+            const subNavbar = document.createElement('div');
+            subNavbar.setAttribute('class', "dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0");
+            item.subNavbar.forEach(subItem => {
+                const subNavbarItem = document.createElement('a');
+                subNavbarItem.setAttribute('class',"nav-item nav-link")
+                subNavbarItem.innerText = subItem.marca
+                subNavbar.appendChild(subNavbarItem);
+            })
+            subNavbarDiv.appendChild(subNavbar);
+            navbar.appendChild(subNavbarDiv);
         }
-        toggleNavbarMethod();
-        $(window).resize(toggleNavbarMethod);
-    });
-    
-    
-    // Back to top button
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('.back-to-top').fadeIn('slow');
-        } else {
-            $('.back-to-top').fadeOut('slow');
+        else{
+            const navbarItem = document.createElement('a');
+            navbarItem.setAttribute('class',"nav-item nav-link");
+            navbarItem.innerText = item.item;
+            navbar.appendChild(navbarItem);
         }
+
     });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
-        return false;
-    });
+}
 
 
-    // Vendor carousel
-    $('.vendor-carousel').owlCarousel({
-        loop: true,
-        margin: 29,
-        nav: false,
-        autoplay: true,
-        smartSpeed: 1000,
-        responsive: {
-            0:{
-                items:2
-            },
-            576:{
-                items:3
-            },
-            768:{
-                items:4
-            },
-            992:{
-                items:5
-            },
-            1200:{
-                items:6
-            }
-        }
-    });
-
-
-    // Related carousel
-    $('.related-carousel').owlCarousel({
-        loop: true,
-        margin: 29,
-        nav: false,
-        autoplay: true,
-        smartSpeed: 1000,
-        responsive: {
-            0:{
-                items:1
-            },
-            576:{
-                items:2
-            },
-            768:{
-                items:3
-            },
-            992:{
-                items:4
-            }
-        }
-    });
-
-
-    // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
-            }
-        }
-        button.parent().parent().find('input').val(newVal);
-    });
-    
-})(jQuery);
-
+navbar();
