@@ -1,7 +1,7 @@
 
 
 const perfumes = [
-    {marca: "Cristian Dior"},
+    {marca: "Christian Dior"},
     {marca: "BVLGARI"},
     {marca: "BURBERRY"},
     {marca: "Todos"}
@@ -12,6 +12,20 @@ const navbarItems = [
     {item: "Collares" },
     {item: "Anillos" },
     {item: "Aretes" },
+    {item: "Vapers"}
+]
+
+const cauroselItems = [
+    {
+        header: "",
+        title: "Nueva Miss Dior Eau de Parfum",
+        imgUrl: "img/carousel-1.jpg" 
+    },
+    {
+        header: "NUUBEZ Vaper Sin Nicotina",
+        title: "Vaper sabor Sandia",
+        imgUrl: "img/carousel-2.jpg"
+    }
 ]
 
 const navbar = () => {
@@ -46,5 +60,27 @@ const navbar = () => {
     });
 }
 
+const carousel = () => {
+    const carouselDiv = document.getElementById('carouselDiv');
+    cauroselItems.forEach((item,index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.setAttribute('class',`carousel-item ${(index===0)?"active":""}`);
+        carouselItem.setAttribute('style',"height: 410px;")
+        carouselItem.innerHTML = `
+                                <img class="img-fluid" src="${item.imgUrl}" alt="Image">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">${item.header}</h4>
+                                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">${item.title}</h3>
+                                        <a href="" class="btn btn-light py-2 px-3">Compra Ahora!</a>
+                                    </div>
+                                </div>
+                                `
+        carouselDiv.appendChild(carouselItem);
+    });
+
+}
+
 
 navbar();
+carousel();
