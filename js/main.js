@@ -1,4 +1,4 @@
-import {perfumesMarcas, productos, categories, cauroselItems} from "./data.js"
+import {perfumesMarcas, listaProductos, categories, cauroselItems} from "./data.js"
 import { navbar } from "./basicLayout.js";
 
 
@@ -42,7 +42,7 @@ const showTags = () => {
 
 const showProductos = () => {
     const perfumesCardsDiv = document.getElementById('perfumesCardsDiv');
-    productos.forEach(producto => {
+    listaProductos.forEach(producto => {
 
         const perfumeCard = document.createElement('div');
         perfumeCard.setAttribute('class',"col-lg-3 col-md-6 col-sm-12 pb-1");

@@ -21,7 +21,7 @@ export const filtroFragancia = [
     "Citricos"
 ]
 
-export const productos = [
+export const listaProductos = [
     {
         nombre: "Chanel No 5 EAU premiere",
         precio: 100,

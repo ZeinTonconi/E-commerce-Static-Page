@@ -1,7 +1,22 @@
 import { navbar } from "./basicLayout.js";
-import { filtroFragancia, filtroPrecio, perfumesMarcas, productos } from "./data.js";
+import { filtroFragancia, filtroPrecio, perfumesMarcas, listaProductos } from "./data.js";
 
-const filtros = () => {
+let productos=listaProductos;
+
+const anadirProducto = async (event) => {
+    const productoId = event.target.id;
+    if(localStorage.getItem(productoId)){
+        const cantidad = localStorage.getItem(productoId);
+        localStorage.setItem(productoId, parseInt(cantidad)+1)
+    }
+    else{
+        await localStorage.setItem(productoId,1);
+    }
+    const cantidadProd = localStorage.getItem(productoId)
+}
+
+
+const mostrarFiltros = () => {
     const precioDiv = document.getElementById('filtroPrecio');
     filtroPrecio.forEach((filtro,index) => {
         const filtroOpcion = document.createElement('div');
@@ -36,7 +51,7 @@ const filtros = () => {
 
 const mostrarProductos = () => {
     const contenedor = document.getElementById('contenedorProductos');
-    productos.forEach((producto) => {
+    productos.forEach((producto,index) => {
         const productoCard = document.createElement('div');
         productoCard.setAttribute('class',"col-lg-4 col-md-6 col-sm-12 pb-1");
         productoCard.innerHTML = ` 
@@ -51,13 +66,42 @@ const mostrarProductos = () => {
                                         </div>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between bg-light border">
-                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Lo quiero!</a>
+                                        <button class="btn btn-sm text-dark p-8" id="producto-${index}">
+                                            <i class="fas fa-shopping-cart text-primary mr-1"></i>    
+                                            Lo Quiero!!
+                                        </button>
                                     </div>
                                 </div>`
         contenedor.appendChild(productoCard);
+        document.getElementById(`producto-${index}`).addEventListener('click', anadirProducto)
     })
 }
 
+const filtrarProductos = () => {
+    const paramsURL = window.location.search;
+    const params = new URLSearchParams(paramsURL)
+    const limIzq = params.get('limIzq');
+    const limDer = params.get('limDer');
+    const marca = params.get('marca');
+    const fragancia = params.get('fragancia'); 
+    if(limIzq && limDer){
+        productos = productos.filter( producto => producto.precio>=limIzq && producto.precio<=limDer)    
+    }
+    if(marca){
+        productos = productos.filter( producto => producto.marca === marca)
+    }
+    if(fragancia){
+        productos = productos.filter( producto => producto.fragancia) 
+    }
+    
+
+    // precio
+    // marca
+    // fragancia
+}
+
+
+filtrarProductos();
 navbar();
-filtros();
+mostrarFiltros();
 mostrarProductos();
