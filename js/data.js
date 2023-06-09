@@ -26,14 +26,16 @@ export const listaProductos = [
         nombre: "Chanel No 5 EAU premiere",
         precio: 100,
         descripcion: "tiene un aroma muy complejo de aldehídos y flores como rosas, jazmín, y lang-ylang, iris y lirio de los valles; todo esto sobre una base cálida y amaderada de sándalo, vainilla, ámbar y pachulí.",
-        tags: ["flores", "Chanel"],
+        tags: ["Flores"],
+        marca: "Chanel",
         imgUrl: "img/chanel_No_5.png"
     },
     {
         nombre: "Chanel Coco Mademoiselle",
         precio: 60,
         descripcion: "",
-        tags: ["frutal","Chanel"],
+        tags: ["Frutal"],
+        marca: "Chanel",
         imgUrl: "img/chanelCoco.png"
     }
 ]

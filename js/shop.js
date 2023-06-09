@@ -2,17 +2,30 @@ import { navbar } from "./basicLayout.js";
 import { filtroFragancia, filtroPrecio, perfumesMarcas, listaProductos } from "./data.js";
 
 let productos=listaProductos;
+let mensajeCompra = false;
 
-const anadirProducto = async (event) => {
+const anadirProducto = (event) => {
     const productoId = event.target.id;
     if(localStorage.getItem(productoId)){
         const cantidad = localStorage.getItem(productoId);
         localStorage.setItem(productoId, parseInt(cantidad)+1)
     }
     else{
-        await localStorage.setItem(productoId,1);
+        localStorage.setItem(productoId,1);
+        let productos = JSON.parse(localStorage.getItem("productosCart"));
+        if(!productos) 
+            productos = []
+        productos.push(productoId);
+        localStorage.setItem("productosCart",JSON.stringify(productos))
     }
-    const cantidadProd = localStorage.getItem(productoId)
+    if(!mensajeCompra){
+        mensajeCompra = true;
+        document.getElementById('mensajeCompra').style.display = "block";
+        setTimeout(() => {
+            mensajeCompra = false;
+            document.getElementById('mensajeCompra').style.display = "none";
+        }, 3000)
+    }
 }
 
 
@@ -77,31 +90,81 @@ const mostrarProductos = () => {
     })
 }
 
+    // hacer que los checkbox se mantengan marcados
+const marcar = (parametro, filtro, tipo) => {
+    parametro.forEach(param => {
+        const id = filtro.findIndex((filtro) => JSON.stringify(filtro) === JSON.stringify(param));  
+        if(id !== -1)
+            document.getElementById(`${tipo}-${id}`).checked=true;
+    })
+}
+
 const filtrarProductos = () => {
     const paramsURL = window.location.search;
     const params = new URLSearchParams(paramsURL)
-    const limIzq = params.get('limIzq');
-    const limDer = params.get('limDer');
-    const marca = params.get('marca');
-    const fragancia = params.get('fragancia'); 
-    if(limIzq && limDer){
-        productos = productos.filter( producto => producto.precio>=limIzq && producto.precio<=limDer)    
-    }
-    if(marca){
-        productos = productos.filter( producto => producto.marca === marca)
-    }
-    if(fragancia){
-        productos = productos.filter( producto => producto.fragancia) 
-    }
-    
+    const limites = JSON.parse(params.get('limites'));
+    const marcas = JSON.parse(params.get('marcas'));
+    const fragancias = JSON.parse(params.get('fragancias')); 
+    if(limites && limites.length !== 0){
 
-    // precio
-    // marca
-    // fragancia
+        marcar(limites, filtroPrecio, "precio")
+        
+        productos = productos.filter( (producto) => {
+            let estaDentro = false;
+            limites.forEach(limite => {
+                if(limite.limIzq <= producto.precio && producto.precio <= limite.limDer){
+                    estaDentro = true;
+                }
+            });
+            return estaDentro;
+        })    
+    }
+    if(marcas && marcas.length !== 0){
+
+        marcas.forEach(marca => {
+            const id = perfumesMarcas.findIndex((filtro) => filtro.marca === marca);  
+            if(id !== -1)
+                document.getElementById(`marca-${id}`).checked=true;
+        })
+
+        productos = productos.filter( producto => marcas.includes(producto.marca));
+    }
+    if(fragancias && fragancias.length !== 0){
+
+        marcar(fragancias, filtroFragancia, "fragancia")
+
+        productos = productos.filter( producto => {
+            return producto.tags.find((tag) => {
+                return fragancias.includes(tag);
+            })
+        }) 
+    }
+
 }
 
 
+mostrarFiltros();
 filtrarProductos();
 navbar();
-mostrarFiltros();
 mostrarProductos();
+
+const filtrar = (tipo, arregloFiltros) => {
+    let arreglo = [];
+    arregloFiltros.forEach((filtro,index) => {
+        if(document.getElementById(`${tipo}-${index}`).checked){
+            arreglo.push(filtro);
+        }
+    })
+    return arreglo;
+}
+
+const aplicarFiltro = () => {
+    let limites = filtrar('precio',filtroPrecio);
+    let marcas = filtrar('marca',perfumesMarcas);
+    marcas = marcas.map((marca) => marca.marca )
+    let fragancias = filtrar('fragancia',filtroFragancia);
+    const newUrl = `./shop.html?limites=${JSON.stringify(limites)}&marcas=${JSON.stringify(marcas)}&fragancias=${JSON.stringify(fragancias)}`
+     window.location.replace(newUrl)
+}
+
+document.getElementById('botonFiltrar').addEventListener('click',aplicarFiltro);
