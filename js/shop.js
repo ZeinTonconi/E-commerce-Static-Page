@@ -6,18 +6,19 @@ let mensajeCompra = false;
 
 const anadirProducto = (event) => {
     const productoId = event.target.id;
-    if(localStorage.getItem(productoId)){
-        const cantidad = localStorage.getItem(productoId);
-        localStorage.setItem(productoId, parseInt(cantidad)+1)
+    const cantidad = parseInt(localStorage.getItem(productoId));
+    if(cantidad){
+        localStorage.setItem(productoId, cantidad+1)
     }
     else{
-        localStorage.setItem(productoId,1);
         let productos = JSON.parse(localStorage.getItem("productosCart"));
         if(!productos) 
             productos = []
         productos.push(productoId);
         localStorage.setItem("productosCart",JSON.stringify(productos))
+        localStorage.setItem(productoId,1);
     }
+
     if(!mensajeCompra){
         mensajeCompra = true;
         document.getElementById('mensajeCompra').style.display = "block";

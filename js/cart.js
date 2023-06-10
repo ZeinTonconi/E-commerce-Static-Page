@@ -1,8 +1,25 @@
 import { navbar } from "./basicLayout.js";
 import { listaProductos } from "./data.js";
 
-const cambiarCantidad = (event,mod) => {
-    console.log(event,mod)
+const cambiarCantidad = (event,modificador) => {
+
+    const productoId = event.target.id.slice(7);
+    const nuevaCantidad =  Math.max(0,parseInt(window.localStorage.getItem(`producto-${productoId}`))+modificador)
+    window.localStorage.setItem(`producto-${productoId}`, nuevaCantidad);
+    document.getElementById(`cantidad-${productoId}`).innerText=nuevaCantidad;
+    document.getElementById(`total-${productoId}`).innerText=`$${nuevaCantidad*listaProductos[productoId].precio}`
+    actualizarFactura();
+}
+
+const removerProducto = (event) => {
+    const id = event.target.id.slice(8);
+    const fila = document.getElementById(`fila-${id}`);
+    fila.remove();
+    window.localStorage.setItem(`producto-${id}`,0);
+    const listaProductosCart = JSON.parse(window.localStorage.getItem('productosCart'));
+    listaProductosCart.splice(listaProductos.findIndex((producto) => producto === `producto-${id}`),1);
+    window.localStorage.setItem('productosCart',JSON.stringify(listaProductosCart))
+    actualizarFactura();
 }
 
 const mostrarProductosCarrito = () => {
@@ -12,6 +29,7 @@ const mostrarProductosCarrito = () => {
         const cantidadProducto = JSON.parse(window.localStorage.getItem(productoCart))
         const id = parseInt(productoCart.slice(9));
         const row = document.createElement('tr');
+        row.setAttribute('id',`fila-${id}`)
         row.innerHTML = `
                         <td class="align-middle">
                             <img src="${listaProductos[id].imgUrl}" style="width: 50px;"> 
@@ -38,12 +56,13 @@ const mostrarProductosCarrito = () => {
                             </div>
                         </td>
                         <td class="align-middle" id=total-${id}>$${cantidadProducto*listaProductos[id].precio}</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                        <td class="align-middle"><button class="btn btn-sm btn-primary" id="remover-${id}"><i class="fa fa-times"></i></button></td>
                         `
         tablaProductos.appendChild(row);
         
         document.getElementById(`boton+-${id}`).addEventListener('click',(event) => cambiarCantidad(event,1));
         document.getElementById(`boton--${id}`).addEventListener('click',(event) => cambiarCantidad(event,-1));
+        document.getElementById(`remover-${id}`).addEventListener('click', removerProducto)
     });
 }
 
@@ -60,7 +79,7 @@ const actualizarFactura = () => {
 
     document.getElementById('subtotal').innerHTML = `$${subtotal}`;
     document.getElementById('impuestos').innerHTML = `$${impuestos}`;
-    document.getElementById('total').innerHTML = `${subtotal+impuestos}`;
+    document.getElementById('total').innerHTML = `$${subtotal+impuestos}`;
 }
 
 

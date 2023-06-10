@@ -59,3 +59,10 @@ export const cauroselItems = [
         imgUrl: "img/carousel-2.jpg"
     }
 ]
+
+export const usuarios = [
+    {
+        email: "usuario@quya.com",
+        contra: "quya"
+    }
+]
