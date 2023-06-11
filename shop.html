@@ -24,25 +24,9 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> -->
-
-
 </head>
 
 <body>
-    <div class="row fixed-bottom">
-        <div class="col-4"></div>
-        <div class="col-4 alert alert-success" style="display: none;" id="mensajeCompra">
-            Se agrego al Carrito!!
-        </div>
-    
-    </div>
-    <div class="row fixed-bottom">
-        <div class="col-4"></div>
-        <div class="col-4 alert alert-danger" style="display: none;" id="mensajeLogin">
-            Debes hacer Login para hacer compras
-        </div>
-    
-    </div>
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
@@ -73,7 +57,7 @@
             <!-- Titulo -->
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="" class="text-decoration-none">
-                   <img class="img-fluid" src="img/logoQuya.png">
+                    <img class="img-fluid" src="img/logoQuya.png">
                 </a>
             </div>
 
@@ -91,8 +75,7 @@
                 
             </div>
 
-
-            <!-- Carrito y Likes -->
+            <!-- Carrito -->
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
@@ -125,13 +108,16 @@
             <!-- Menu Header -->
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <!-- Pantalla Pequenia Start -->
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                        <img class="img-fluid w-25" src="img/logoQuya.png">
                     </a>
                     <!-- Boton para el menu en cuando la pantalla es pequenia -->
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <!-- Pantalla Pequenia End -->
+
                     <!-- Menu -->
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
@@ -152,7 +138,7 @@
                     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
                         <h1 class="font-weight-semi-bold text-uppercase mb-3">Nuestra Tienda</h1>
                         <div class="d-inline-flex">
-                            <p class="m-0"><a href="">Pantalla de Inicio</a></p>
+                            <p class="m-0"><a href="index.html">Pantalla de Inicio</a></p>
                             <p class="m-0 px-2">-</p>
                             <p class="m-0">Tienda</p>
                         </div>
@@ -270,9 +256,6 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
     <script type="module" src="./js/shop.js" ></script>
 
 

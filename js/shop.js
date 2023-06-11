@@ -90,6 +90,7 @@ const mostrarProductos = () => {
                                     </div>
                                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                         <h6 class="text-truncate mb-3">${producto.nombre}</h6>
+                                        <p>${producto.descripcion}</p>
                                         <div class="d-flex justify-content-center">
                                             <h6>$${producto.precio}</h6>
                                         </div>
