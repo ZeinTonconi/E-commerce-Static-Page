@@ -69,27 +69,23 @@
 
             <!-- Buscar producto -->
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
+                
+                <div class="input-group" id="buscarProducto">
+                    <input type="text" class="form-control" placeholder="Buscar Productos" id="producto">
+                    <div class="input-group-append">
+                        <button class="input-group-text bg-transparent text-primary" id="botonBuscar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
-                </form>
+                </div>
+                
             </div>
 
             <!-- Carrito y Likes -->
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge" id="numeroProductos">0</span>
                 </a>
             </div>
         </div>
@@ -128,21 +124,15 @@
                     <!-- Menu -->
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link ">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="index.html" class="nav-item nav-link">Inicio</a>
+                            <a href="shop.html" class="nav-item nav-link">Tienda</a>
+                            <a href="cart.html" class="nav-item nav-link" id="carrito" style="display: none;">Compras</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            <h5 id="nombreUsuario" class="font-weight-semi-bold" style="display: none;"></h5>
+                            <button id='logout' class="btn btn-sm text-dark p-8" style="display: none;">Logout</button>
+                            <a href="login.html" class="nav-item nav-link" id="login">Login</a>
+                            <a href="register.html" class="nav-item nav-link" id="register">Register</a>
                         </div>
                     </div>
                 </nav>
@@ -189,7 +179,47 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold" id="total"></h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button class="btn btn-block btn-primary my-3 py-3" 
+                                data-toggle="modal" 
+                                data-target="#modalPago"
+                                id="botonPagar">Pagar</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Datos de la Factura</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span class="font-weight-bold">Nombre: </span><span id="nombre"> </span></p>
+
+                                    <p><span class="font-weight-bold">Dirrecion de envio: </span><span id="direccion"> </span></p>
+
+                                    <p><span class="font-weight-bold">Numero de Contacto: </span><span id="celular"> </span></p>
+
+                                    <p><span class="font-weight-bold">Total: </span><span id="totalFactura"> </span></p>
+                                    <p>*Le llegaran los productos en el transcurso de los siguientes 3 dias.
+                                        Cualquier problema con el envio por favor contactese con nosotros lo ante posible   </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="confirmar">Confirmar</button>
+                                    <div id="mensajeConfirmacion" style="display: none;">
+                                        <div class="alert alert-success" role="alert">
+                                            <h4 class="alert-heading">Listo!!</h4>
+                                            <p>Te contactaremos cuando el producto llegue a tu casa</p>
+                                            <hr>
+                                            <a href="index.html" type="button" class="btn">Regresar a la Pantalla de Inicio</a>
+                                          </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

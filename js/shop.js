@@ -1,11 +1,11 @@
-import { basicLayout } from "./basicLayout.js";
+import { basicLayout, productosCarrito } from "./basicLayout.js";
 import { filtroFragancia, filtroPrecio, perfumesMarcas, listaProductos } from "./data.js";
 
 let productos=listaProductos;
 let mensajeCompra = false, mensajeLogin=false;
 
 const anadirProducto = (event) => {
-    if(!document.getElementById('usuario')){
+    if(!window.localStorage.getItem('usuario')){
         if(!mensajeLogin){
             mensajeLogin = true;
             document.getElementById('mensajeLogin').style.display = "block";
@@ -22,13 +22,16 @@ const anadirProducto = (event) => {
         localStorage.setItem(productoId, cantidad+1)
     }
     else{
-        let productos = JSON.parse(localStorage.getItem("productosCart"));
+        localStorage.setItem(productoId,1);
+    }
+
+    let productos = JSON.parse(window.localStorage.getItem('productosCart'));
+    if(!productos || !productos.includes(productoId)){
         if(!productos) 
             productos = []
         productos.push(productoId);
-        localStorage.setItem("productosCart",JSON.stringify(productos))
-        localStorage.setItem(productoId,1);
     }
+    localStorage.setItem("productosCart",JSON.stringify(productos))
 
     if(!mensajeCompra){
         mensajeCompra = true;
@@ -38,6 +41,7 @@ const anadirProducto = (event) => {
             document.getElementById('mensajeCompra').style.display = "none";
         }, 3000)
     }
+    productosCarrito();
 }
 
 
@@ -117,6 +121,11 @@ const filtrarProductos = () => {
     const limites = JSON.parse(params.get('limites'));
     const marcas = JSON.parse(params.get('marcas'));
     const fragancias = JSON.parse(params.get('fragancias')); 
+    const buscar = params.get('buscar');
+    if(buscar){
+        productos = productos.filter( (producto) => producto.nombre.includes(buscar))
+
+    }
     if(limites && limites.length !== 0){
 
         marcar(limites, filtroPrecio, "precio")

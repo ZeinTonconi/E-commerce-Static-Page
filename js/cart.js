@@ -1,4 +1,4 @@
-import { navbar } from "./basicLayout.js";
+import { basicLayout, productosCarrito } from "./basicLayout.js";
 import { listaProductos } from "./data.js";
 
 const cambiarCantidad = (event,modificador) => {
@@ -9,17 +9,20 @@ const cambiarCantidad = (event,modificador) => {
     document.getElementById(`cantidad-${productoId}`).innerText=nuevaCantidad;
     document.getElementById(`total-${productoId}`).innerText=`$${nuevaCantidad*listaProductos[productoId].precio}`
     actualizarFactura();
+    productosCarrito();
 }
 
 const removerProducto = (event) => {
     const id = event.target.id.slice(8);
     const fila = document.getElementById(`fila-${id}`);
+    console.log(event.target)
     fila.remove();
     window.localStorage.setItem(`producto-${id}`,0);
     const listaProductosCart = JSON.parse(window.localStorage.getItem('productosCart'));
     listaProductosCart.splice(listaProductos.findIndex((producto) => producto === `producto-${id}`),1);
     window.localStorage.setItem('productosCart',JSON.stringify(listaProductosCart))
     actualizarFactura();
+    productosCarrito();
 }
 
 const mostrarProductosCarrito = () => {
@@ -56,7 +59,11 @@ const mostrarProductosCarrito = () => {
                             </div>
                         </td>
                         <td class="align-middle" id=total-${id}>$${cantidadProducto*listaProductos[id].precio}</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary" id="remover-${id}"><i class="fa fa-times"></i></button></td>
+                        <td class="align-middle">
+                            <button class="btn btn-sm btn-primary font-weight-semi-bold" id="remover-${id}">
+                                X
+                            </button>
+                        </td>
                         `
         tablaProductos.appendChild(row);
         
@@ -82,8 +89,27 @@ const actualizarFactura = () => {
     document.getElementById('total').innerHTML = `$${subtotal+impuestos}`;
 }
 
+const llenarFactura = () => {
+    const usuario = JSON.parse(window.localStorage.getItem('usuario'));
+    document.getElementById('nombre').innerText = usuario.nombre;
+    document.getElementById('direccion').innerText = usuario.direccion;
+    document.getElementById('celular').innerText = usuario.celular;
+    document.getElementById('totalFactura').innerText = document.getElementById('total').innerText
+}
 
+const mostrarConfirmacion = () => {
+    console.log(document.getElementById('mensajeConfirmacion'));
+    document.getElementById('mensajeConfirmacion').style.display = 'block';
+    const listaProductosCart = JSON.parse(window.localStorage.getItem('productosCart'));
+    listaProductosCart.forEach(producto => {
+        window.localStorage.setItem(producto,0);
+    });
+    window.localStorage.setItem('productosCart','[]')
+}
 
-navbar();
+basicLayout();
 mostrarProductosCarrito();
 actualizarFactura();
+
+document.getElementById('botonPagar').addEventListener('click',llenarFactura);
+document.getElementById('confirmar').addEventListener('click',mostrarConfirmacion);

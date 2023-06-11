@@ -54,8 +54,40 @@ const checkLogin = () => {
     }
 }
 
+const buscarProducto = () => {
+    const producto = document.getElementById('producto').value;
+    if(producto){
+        window.location.href = `shop.html?buscar=${producto}`
+    }
+}
+
+const iniciarBuscador = () => {
+    const buscador = document.getElementById('buscarProducto');
+    const botonBuscar = document.getElementById('botonBuscar');
+    botonBuscar.addEventListener('click',buscarProducto());
+    buscador.addEventListener('keydown', (event) => {
+        if(event.code === "Enter"){
+            buscarProducto();
+        }
+    })
+}
+
+export const productosCarrito = () => {
+    const numeroProductos = document.getElementById('numeroProductos');
+    const productos = JSON.parse(window.localStorage.getItem('productosCart'));
+    numeroProductos.innerText = 0;
+    if(productos){
+        productos.forEach(producto => {
+            const numero = parseInt(window.localStorage.getItem(producto))
+            numeroProductos.innerText = parseInt(numeroProductos.innerText)+parseInt(numero);
+            console.log(numero);
+        });
+    }
+}
 
 export const basicLayout = () => {
     navbar();
     checkLogin();
+    iniciarBuscador();
+    productosCarrito();
 }
