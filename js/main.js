@@ -1,5 +1,5 @@
 import {perfumesMarcas, listaProductos, categories, cauroselItems} from "./data.js"
-import { navbar } from "./basicLayout.js";
+import { basicLayout } from "./basicLayout.js";
 
 
 const carousel = () => {
@@ -67,7 +67,7 @@ const showProductos = () => {
 }
 
 
-navbar();
+basicLayout();
 carousel();
 showTags();
 showProductos();

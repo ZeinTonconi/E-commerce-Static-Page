@@ -32,7 +32,7 @@
     <div class="row fixed-bottom">
         <div class="col-4"></div>
         <div class="col-4 alert alert-danger" style="display: none;" id="mensajeError">
-            Usuario o Contraseña incorrectos
+            Contraseñas no validas
         </div>    
     </div>
     <!-- Topbar Start -->
@@ -158,7 +158,7 @@
     <!-- Formulario Start-->
     <div class="container-fluid">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Login</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">Registro</span></h2>
         </div>
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
@@ -166,21 +166,33 @@
                     <div id="success"></div>
                     <form name="sentMessage" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
-                            <input type="email" class="form-control" id="email" placeholder="E-mail"
-                                required="required" data-validation-required-message="Please enter your name" />
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre"/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="password" class="form-control" id="contrasena" placeholder="Contraseña"
-                                required="required" data-validation-required-message="Please enter your email" />
+                            <input type="text" class="form-control" id="direccion" placeholder="Direccion"/>
                             <p class="help-block text-danger"></p>
                         </div>
-
+                        <div class="control-group">
+                            <input type="text" class="form-control" id="celular" placeholder="Telefono Celular"/>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <input type="email" class="form-control" id="email" placeholder="E-mail"/>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <input type="password" class="form-control" id="contrasena" placeholder="Ingrese una Contraseña"/>
+                            <br>
+                            <input type="password" class="form-control" id="contrasenaRepetida" placeholder="Ingrese nuevamentes la Contraseña"/>
+                            <p class="help-block text-danger"></p>
+                        </div>
                     </form>
-                    
                     <div>
-                        <button class="btn btn-primary py-2 px-4" id="login">Login</button>
+                        <button class="btn btn-primary py-2 px-4" id="registro">Registro</button>
                     </div>
+                    
+                    
                 </div>
             </div>
             <div class="col-lg-5 mb-5">
@@ -237,7 +249,7 @@
     <!-- <script src="lib/owlcarousel/owl.carousel.min.js"></script> -->
 
     <!-- Mi Js -->
-    <script src="./js/login.js" type="module"></script>
+    <script src="./js/register.js" type="module"></script>
 </body>
 
 </html>

@@ -1,10 +1,21 @@
-import { navbar } from "./basicLayout.js";
+import { basicLayout } from "./basicLayout.js";
 import { filtroFragancia, filtroPrecio, perfumesMarcas, listaProductos } from "./data.js";
 
 let productos=listaProductos;
-let mensajeCompra = false;
+let mensajeCompra = false, mensajeLogin=false;
 
 const anadirProducto = (event) => {
+    if(!document.getElementById('usuario')){
+        if(!mensajeLogin){
+            mensajeLogin = true;
+            document.getElementById('mensajeLogin').style.display = "block";
+            setTimeout(() => {
+                mensajeLogin = false;
+                document.getElementById('mensajeLogin').style.display = "none";
+            }, 3000)
+        }
+        return;
+    }
     const productoId = event.target.id;
     const cantidad = parseInt(localStorage.getItem(productoId));
     if(cantidad){
@@ -146,7 +157,7 @@ const filtrarProductos = () => {
 
 mostrarFiltros();
 filtrarProductos();
-navbar();
+basicLayout();
 mostrarProductos();
 
 const filtrar = (tipo, arregloFiltros) => {

@@ -1,7 +1,7 @@
 import { categories } from "./data.js";
 
 
-export const navbar = () => {
+const navbar = () => {
     const navbar=document.getElementById('navbar-tienda-div');
     categories.forEach(item => {
         
@@ -33,3 +33,29 @@ export const navbar = () => {
     });
 }
 
+const logout = () => {
+     window.localStorage.clear();
+     window.location.href='index.html';
+}
+
+const checkLogin = () => {
+    const usuario = JSON.parse(window.localStorage.getItem('usuario'))
+    if(usuario){
+        document.getElementById('login').style.display="none";
+        document.getElementById('register').style.display="none";
+        const nombreUsuario = document.getElementById('nombreUsuario');
+        nombreUsuario.style.display="block";
+        nombreUsuario.innerText = usuario.nombre;
+        console.log(usuario);
+        const logoutBoton = document.getElementById('logout');
+        logoutBoton.style.display="block";
+        logoutBoton.addEventListener('click',logout);
+        document.getElementById('carrito').style.display='block'
+    }
+}
+
+
+export const basicLayout = () => {
+    navbar();
+    checkLogin();
+}
