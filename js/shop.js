@@ -80,13 +80,13 @@ const mostrarFiltros = () => {
 
 const mostrarProductos = () => {
     const contenedor = document.getElementById('contenedorProductos');
-    productos.forEach((producto,index) => {
+    productos.forEach((producto) => {
         const productoCard = document.createElement('div');
         productoCard.setAttribute('class',"col-lg-4 col-md-6 col-sm-12 pb-1");
         productoCard.innerHTML = ` 
                                 <div class="card product-item border-0 mb-4">
                                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                        <img class="img-fluid w-100" src="${producto.imgUrl}">
+                                        <img class="img-fluid align-self-center" style="height: 300px" src="${producto.imgUrl}">
                                     </div>
                                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                         <h6 class="text-truncate mb-3">${producto.nombre}</h6>
@@ -96,14 +96,14 @@ const mostrarProductos = () => {
                                         </div>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between bg-light border">
-                                        <button class="btn btn-sm text-dark p-8" id="producto-${index}">
-                                            <i class="fas fa-shopping-cart text-primary mr-1"></i>    
+                                        <button class="btn btn-sm text-dark p-8" id="${producto.productoId}">
+                                            <i class="fas fa-shopping-cart text-primary mr-1" id="${producto.productoId}"></i>    
                                             Lo Quiero!!
                                         </button>
                                     </div>
                                 </div>`
         contenedor.appendChild(productoCard);
-        document.getElementById(`producto-${index}`).addEventListener('click', anadirProducto)
+        document.getElementById(`${producto.productoId}`).addEventListener('click', anadirProducto)
     })
 }
 

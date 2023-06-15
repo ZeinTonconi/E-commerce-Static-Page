@@ -31,6 +31,7 @@ const checkLogin = () => {
         logoutBoton.style.display="block";
         logoutBoton.addEventListener('click',logout);
         document.getElementById('carrito').style.display='block'
+        document.getElementById('botonCarrito').style.display='block'
     }
 }
 

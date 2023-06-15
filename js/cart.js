@@ -15,11 +15,11 @@ const cambiarCantidad = (event,modificador) => {
 const removerProducto = (event) => {
     const id = event.target.id.slice(8);
     const fila = document.getElementById(`fila-${id}`);
-    console.log(event.target)
     fila.remove();
     window.localStorage.setItem(`producto-${id}`,0);
     const listaProductosCart = JSON.parse(window.localStorage.getItem('productosCart'));
-    listaProductosCart.splice(listaProductos.findIndex((producto) => producto === `producto-${id}`),1);
+    listaProductosCart.splice(listaProductosCart.findIndex((producto) => producto === `producto-${id}`),1);
+    
     window.localStorage.setItem('productosCart',JSON.stringify(listaProductosCart))
     actualizarFactura();
     productosCarrito();
@@ -42,18 +42,18 @@ const mostrarProductosCarrito = () => {
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" 
+                                    <button class="btn btn-sm btn-primary btn-minus  font-weight-semi-bold" 
                                             id="boton--${id}"
                                             >
-                                    <i class="fa fa-minus"></i>
+                                    -
                                     </button>
                                 </div>
                                 <div class="bg-secondary text-center p-1" id=cantidad-${id} >${cantidadProducto}</div>
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus" 
+                                    <button class="btn btn-sm btn-primary btn-plus font-weight-semi-bold" 
                                             id="boton+-${id}"
                                             >
-                                        <i class="fa fa-plus"></i>
+                                        +
                                     </button>
                                 </div>
                             </div>
@@ -98,7 +98,6 @@ const llenarFactura = () => {
 }
 
 const mostrarConfirmacion = () => {
-    console.log(document.getElementById('mensajeConfirmacion'));
     document.getElementById('mensajeConfirmacion').style.display = 'block';
     const listaProductosCart = JSON.parse(window.localStorage.getItem('productosCart'));
     listaProductosCart.forEach(producto => {
