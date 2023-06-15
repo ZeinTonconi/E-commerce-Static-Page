@@ -1,4 +1,4 @@
-import { navbar } from "./basicLayout.js";
+import { basicLayout } from "./basicLayout.js";
 import { usuarios } from "./data.js";
 
 const registrarUsuario = () => {
@@ -39,6 +39,6 @@ const registrarUsuario = () => {
     window.location.href = 'index.html'
 }
 
-navbar();
+basicLayout();
 
 document.getElementById('registro').addEventListener('click',registrarUsuario)
